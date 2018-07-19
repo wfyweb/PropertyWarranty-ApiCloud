@@ -1,22 +1,22 @@
 # PropertyWarranty-ApiCloud
 
-###描述
+### 描述
 
 工作中的部分业务demo，实现一个物业报修系统。主要功能包括：业主报修信息提交,报修进度流程，满意度评价，管理中心审核，维修师傅接单，维修情况汇报等。
 
-###技术栈
+### 技术栈
 
 apicloud vue mcm云数据服务 
 
-###项目截图
+### 项目截图
 
 ![left 报修进度](./image/1.jpg)
 ![enter 报修列表](./image/2.jpg)
-![right 报修评价](./image/3.jpg)
+![enter 报修评价](./image/3.jpg)
 
-###文件目录
+### 文件目录
 
-####owner  业主报修  - 文件夹
+#### owner  业主报修  - 文件夹
 
 	  owner			 业主报修-title
 
@@ -38,7 +38,7 @@ apicloud vue mcm云数据服务
 
 	  evaluate_complete_body	维修评价完成-内容
 
-####admin   物业管理员 - 文件夹
+#### admin   物业管理员 - 文件夹
 
 	 admin			 物业管理-title
 
@@ -58,7 +58,7 @@ apicloud vue mcm云数据服务
 
 	  admin_complete_body2		 回访内容 --已成功
 
-####master   维修师傅 - 文件夹
+#### master   维修师傅 - 文件夹
 
 	 master			 维修师傅-title
 
