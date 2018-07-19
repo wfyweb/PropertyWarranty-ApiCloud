@@ -10,9 +10,9 @@ apicloud vue mcm云数据服务
 
 ###项目截图
 
-![报修进度](./image/1.jpg) <img src="./image/1.jpg" width="300">
-![报修列表](./image/2.jpg) <img src="./image/2.jpg" width="300">
-![报修评价](./image/3.jpg) <img src="./image/3.jpg" width="300">
+![left 报修进度](./image/1.jpg)
+![enter 报修列表](./image/2.jpg)
+![right 报修评价](./image/3.jpg)
 
 ###文件目录
 
