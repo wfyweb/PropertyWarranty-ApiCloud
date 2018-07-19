@@ -1,0 +1,420 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>维修评价</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <style>
+        .border-box {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        .flex-justify-center {
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-justify-content: center;
+            -o-justify-content: center;
+            justify-content: center;
+        }
+
+        .flex-justify-space-between {
+            -webkit-justify-content: space-between;
+            -moz-justify-content: space-between;
+            -ms-justify-content: space-between;
+            -o-justify-content: space-between;
+            justify-content: space-between;
+        }
+
+        .flex-justify-space-around {
+            -webkit-justify-content: space-around;
+            -moz-justify-content: space-around;
+            -ms-justify-content: space-around;
+            -o-justify-content: space-around;
+            justify-content: space-around;
+        }
+
+        .flex-align-center {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        b {
+            padding-left: 4px;
+            color: red;
+        }
+
+        .aui-iconfont {
+            padding-right: 10px;
+        }
+
+        .aui-list .aui-list-item-label {
+            width: 40%;
+        }
+
+        #wrap {
+            width: 100%;
+        }
+
+        .wrap-evaluate {
+            width: 100%;
+            height: 250px;
+            background: #f5f5f5;
+        }
+
+        .evaluate-people-card {
+            height: 180px;
+        }
+
+        .people-head {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .people-head img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .peple-name {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .evaluate-stars {
+            background: #fff;
+            width: 100%;
+            height: 70px;
+        }
+
+        .bor-b {
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .wrap-message {
+            margin-top: 20px;
+        }
+
+        .stars {
+            margin-left: 15px;
+        }
+
+        .evaluate-content {
+            width: 100%;
+        }
+
+        .evaluate-content-title {
+            width: 45%;
+            margin-top: 10px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .evaluate-content-box {
+            width: 100%;
+            padding: 0 10px 10px 10px;
+            min-height: 100px;
+            margin-top: 50px;
+        }
+
+        #text {
+            width: 100%;
+            min-height: 120px;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        .stars i {
+            margin-right: 5px;
+            font-size: 18px;
+        }
+
+        .icon-xingxing {
+            color: #F9BC13;
+        }
+
+        .aui-list-item-right {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content border-box" id="wrap">
+        <div class="wrap-evaluate flex flex-v flex-align-center flex-justify-center">
+            <div class="evaluate-people-card  flex flex-v flex-align-center flex-justify-center">
+                <div class="people-head"><img src="../../image/people-head.png" alt=""></div>
+                <div class="peple-name">
+                    <h2>{{maintain_people}}</h2></div>
+            </div>
+            <div class="evaluate-stars flex flex-row flex-align-center flex-justify-center">
+                <div class="stars-title">
+                    <h3>评价</h3></div>
+                <div class="stars">
+                    <i class="iconfont" :class="item" v-for="(item,index) in setStars" @click="getStars(index)" track-by="index" tapmode></i>
+                </div>
+            </div>
+        </div>
+        <div class="wrap-message">
+            <ul class="aui-list aui-form-list">
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label">
+                            <i class="aui-iconfont aui-icon-menu"></i>报修单号
+                        </div>
+                        <div class="aui-list-item-input">
+                            {{serialnumber}}
+                        </div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label">
+                            <i class="aui-iconfont aui-icon-my"></i>联系人
+                        </div>
+                        <div class="aui-list-item-input">
+                            {{username}}
+                        </div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label">
+                            <i class="aui-iconfont aui-icon-phone"></i>联系电话
+                        </div>
+                        <div class="aui-list-item-input">
+                            {{phone}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label">
+                            <i class="aui-iconfont aui-icon-date"></i>报修日期
+                        </div>
+                        <div class="aui-list-item-input">
+                            {{usertime}}
+                        </div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="evaluate-content flex flex-row">
+                        <div class="evaluate-content-title">
+                            <i class="aui-iconfont aui-icon-comment"></i>维修内容
+                        </div>
+                        <div class="evaluate-content-box">
+                            {{description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label">
+                            <i class="aui-iconfont aui-icon-gear"></i>是否维修完成<b>*</b>
+                        </div>
+                        <div class="aui-list-item-right">
+                            <input type="checkbox" v-model='checked' class="aui-switch" @click="fnChecked">
+                        </div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="evaluate-content flex flex-v">
+                        <div class="evaluate-content-title">
+                            <i class="aui-iconfont aui-icon-my"></i>您的评价 <b>*</b>
+                        </div>
+                        <div class="evaluate-content-box" style="margin-top:0;">
+                            <textarea id="text" name="name" placeholder="维修服务是否满意您的需求，说说维修后您的使用情况" v-model="evaluate"></textarea>
+                        </div>
+                    </div>
+                </li>
+
+        </div>
+        <div class="aui-content-padded" tapmode @click="showDefault()">
+            <div class="aui-btn aui-btn-info aui-btn-block">确定</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#wrap",
+        data: {
+            serialnumber:"",
+            username: "",
+            phone: "",
+            usertime: "",
+            house: "",
+            description: "",
+            selected: "",
+            checked: "",
+            evaluate:"",
+            maintain_people:"",
+            score:4,
+            admin_state:"",
+            master_state:""
+        },
+        methods: {
+            init:function(){
+                 this.id=$api.getStorage('usernameId');
+                getData();
+            },
+            getStars: function(index) {
+                this.score = index + 1
+            },
+            fnChecked:function(){
+              if(this.checked){
+                this.admin_state=2;
+                this.master_state=2
+              }else{
+                this.admin_state=1;
+                this.master_state=1
+              }
+            },
+            showDefault:function () {
+                if (!this.evaluate) {
+                    api.toast({
+                        msg: '请填写您的评价',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+
+                var toast = new auiToast();
+                  toast.success({
+                      title: "提交成功",
+                      duration: 1000,
+                      location: 'bottom'
+                  });
+                  postData();
+                api.openWin({
+                    name: 'evaluate_complete',
+                    url: './evaluate_complete.html',
+                    pageParam: {
+                        name: 'test',
+                        // starClass: app.starClass,
+                        // checked:app.checked
+                    }
+                });
+            }
+        },
+        computed: {
+            //计算星星
+            setStars: function() {
+                var array = [];
+                var score = this.score;
+                for (var i = 0; i < 5; i++) {
+                    if (i < score) {
+                        array.push("icon-xingxing")
+                    } else {
+                        array.push("icon-star")
+                    }
+                }
+                this.starClass = array
+                return array;
+            },
+
+        }
+
+    })
+
+    apiready = function() {
+        app.init()
+    };
+     //请求数据
+    function getData(){
+      var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+      var Datalist= client.Factory("datalist");
+      Datalist.get({
+        "_id": app.id
+      },function(ret,err){
+        //console.log(JSON.stringify(ret))
+        app.serialnumber=ret.serialnumber;
+        app.username=ret.username;
+        app.phone=ret.phone;
+        app.usertime=ret.usertime;
+        app.house=ret.house;
+        app.description=ret.description;
+        app.selected=ret.selected;
+        app.imgUrl = ret.imgUrl;
+        app.handle_state=ret.handle_state;
+        app.handle_time=ret.handle_time;
+        app.hanle_people=ret.hanle_people;
+        app.maintain_people=ret.maintain_people;
+        app.maintain_phone=ret.maintain_phone;
+        app.maintain_time=ret.maintain_time;
+        app.admin_state=ret.admin_state;
+        app.master_state=ret.master_state;
+      })
+    };
+    //数据提交
+    function postData(postdata) {
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.save(
+            {"_id":app.id},
+            {
+                score: app.score,
+                checked: app.checked,
+                evaluate:app.evaluate,
+                starClass:app.starClass,
+                admin_state:app.admin_state,
+                master_state:app.master_state,
+                evaluate_index:1
+            },
+            function(ret, err) {
+                //console.log(JSON.stringify(ret))
+                //alert(JSON.stringify(ret))
+
+        })
+    }
+</script>
+
+</html>

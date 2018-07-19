@@ -1,0 +1,85 @@
+* {
+    padding: 0;
+    margin: 0;
+     text-decoration: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	 outline: none;
+        resize: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background: #f2f2f2;
+}
+
+#wrap {
+    width: 100%;
+    height: 100%;
+}
+
+.wrap_div {
+    width: 100%;
+    height: 70px;
+    background: #ffffff;
+    position: relative;
+}
+
+
+.wrap_div div:nth-child(1) {
+    width: 40%;
+    height: 60px;
+    color: #101010;
+    font-size:13px;
+    opacity:0.8;
+    line-height:60px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 10%;
+    margin: auto 0;
+}
+
+.wrap_div div:nth-child(2) {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    /*position: relative;*/
+}
+.head {
+    width:50px;
+    height:50px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    position: absolute;
+    top: 0;
+    right: 15%;
+    bottom: 0;
+    margin: auto 0;
+}
+.rightArrow{
+    height:65%;
+    position: absolute;
+    top: 0;
+    right: 15%;
+    bottom: 0;
+    margin: auto 0;
+}
+.myHead {
+}
+
+.myName {
+    margin: 1% 0 0 0;
+}
+
+.myTelephone {
+    margin: 1% 0 0 0;
+}
+.tuiChu{
+    width:100%;
+    text-align: center;
+    font-size: 13px;
+}

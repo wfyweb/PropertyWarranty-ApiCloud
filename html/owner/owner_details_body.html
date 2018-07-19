@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        b {
+            padding-left: 4px;
+            color: red;
+        }
+
+        .item-textarea {
+            height: 120px;
+        }
+
+        .aui-list-item-input input {
+            color: #757575;
+        }
+
+        #select {
+            color: #757575;
+        }
+
+        #txt {
+            width: 100%;
+            height: 90px;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        #borde-top {
+            background-image: none;
+        }
+
+        .autopic {
+            width: 100%;
+            height: 5.55rem;
+            line-height: 5.55rem;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content" id="app" v-cloak>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        报修单号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{serialnumber}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系人
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{username}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系电话
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{phone}}</span>
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        报修日期
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{usertime}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        单元号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{house}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题分类
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select id="select">
+                            <option>{{selected}}</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item item-textarea">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="margin-top: -50px">
+                        问题描述
+                    </div>
+                    <div class="aui-list-item-input">
+                        <!-- <textarea id="txt" placeholder="请输入您的详细问题描述"></textarea> -->
+                        <div id="txt">{{description}}</div>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-media-list" id="borde-top">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">问题图片</div>
+                    <div class="aui-row aui-row-padded">
+                        <div class="aui-col-xs-4" v-for="(item,index) in imgUrl" @click="fnOpenPicSlide(index)">
+                            <img :src="item" class="autopic" />
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理状态
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{ handleState}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" v-if="handle_time">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理时间
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{handle_time}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" v-if="handle_people">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理人
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{handle_people}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" v-if="maintain_people">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        维修师傅
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{maintain_people}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" v-if="maintain_phone">
+                <div class="aui-list-item-inner" >
+                    <div class="aui-list-item-label">
+                        师傅电话
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{maintain_phone}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" v-if="maintain_time">
+                <div class="aui-list-item-inner" >
+                    <div class="aui-list-item-label" style="width:50%;">
+                        预约维修时间
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{maintain_time}}</span>
+                    </div>
+                </div>
+            </li>
+            </ui>
+            <div class="aui-content-padded" tapmode @click="showDefault()" v-if="handle_index===4">
+                <div class="aui-btn aui-btn-info aui-btn-block">请评价</div>
+            </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#app",
+        data: {
+            serialnumber: "",
+            username: "",
+            phone: "",
+            usertime: "",
+            house: "",
+            description: "",
+            selected: "",
+            imgUrl: [],
+            handle_state:"",
+            handle_index:"",
+            handle_time: "",
+            handle_people: "",
+            maintain_people: "",
+            maintain_phone: "",
+            maintain_time: "",
+            evaluate:""
+        },
+        methods: {
+            init:function(){
+                this.id=$api.getStorage('usernameId');
+                getDate();
+            },
+            //图片浏览
+            fnOpenPicSlide: function(index_) {
+                var that = this,
+                    activeIndex = index_;
+                var imageBrowser = api.require('imageBrowser');
+                imageBrowser.openImages({
+                    imageUrls: that.imgUrl,
+                    activeIndex: activeIndex
+                });
+            },
+             showDefault:function () {
+                //api.closeWin();
+                var toast = new auiToast();
+                toast.success({
+                    title: "提交成功",
+                    duration: 1000,
+                    location: 'bottom'
+                });
+                if(!this.evaluate){
+                    api.openWin({
+                        name: 'owner_evaluate',
+                        url: './owner_evaluate.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    });
+                }else{
+                    api.openWin({
+                        name: 'evaluate_complete',
+                        url: './evaluate_complete.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    });
+                }
+
+            }
+        },
+        computed:{
+          //计算评价状态
+          handleState:function(){
+            return  this.handle_state[this.handle_index]
+          }
+        }
+    })
+    apiready = function() {
+        app.init();
+    };
+
+
+    //请求数据
+    function getDate(){
+      var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+      var Datalist= client.Factory("datalist");
+      Datalist.get({
+        "_id":app.id
+      },function(ret,err){
+        app.serialnumber=ret.serialnumber;
+        app.username=ret.username;
+        app.phone=ret.phone;
+        app.usertime=ret.usertime;
+        app.house=ret.house;
+        app.description=ret.description;
+        app.selected=ret.selected;
+        app.imgUrl = ret.imgUrl;
+        app.handle_state=ret.handle_state;
+        app.handle_time=ret.handle_time;
+        app.handle_people=ret.handle_people;
+        app.maintain_people=ret.maintain_people;
+        app.maintain_phone=ret.maintain_phone;
+        app.maintain_time=ret.maintain_time;
+        app.evaluate=ret.evaluate;
+        app.handle_index = ret.handle_index;
+        app.handle_state = ret.handle_state;
+      })
+    };
+</script>
+
+</html>

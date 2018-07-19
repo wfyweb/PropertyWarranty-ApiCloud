@@ -1,0 +1,405 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>管理中心</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .border-box {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        .flex-justify-center {
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-justify-content: center;
+            -o-justify-content: center;
+            justify-content: center;
+        }
+
+        .flex-justify-space-between {
+            -webkit-justify-content: space-between;
+            -moz-justify-content: space-between;
+            -ms-justify-content: space-between;
+            -o-justify-content: space-between;
+            justify-content: space-between;
+        }
+
+        .flex-justify-space-around {
+            -webkit-justify-content: space-around;
+            -moz-justify-content: space-around;
+            -ms-justify-content: space-around;
+            -o-justify-content: space-around;
+            justify-content: space-around;
+        }
+
+        .flex-align-center {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .bor-r8 {
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -o-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .i-center {
+            text-align: center;
+            display: block;
+            font-size: 28px;
+        }
+
+        #wrap {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .wrap-card {
+            width: 100%;
+            background: #fff;
+            margin-bottom: 10px;
+            padding: 10px 10px 0 10px;
+            font-family: "Microsoft Yahei"
+        }
+
+        .bor-b {
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .card-item {
+            height: 40px;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .card-item:last-child {
+            padding-left: 0;
+            text-align: center;
+        }
+
+        .pairnum {
+            font-size: 14px;
+            line-height: 35px;
+            color: #09C2DE;
+        }
+
+        .more {
+            font-size: 12px;
+            line-height: 35px;
+            color: #BBBBBB;
+        }
+
+        .item-key,
+        .card-item-i {
+            font-size: 14px;
+            line-height: 35px;
+            color: #999;
+        }
+
+        .item-value {
+            font-size: 14px;
+            line-height: 35px;
+            color: #000;
+        }
+
+        .card-item-i {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .item-key {
+            width: 25%;
+        }
+
+        .usertime {
+            color: #999;
+        }
+        .item-examine,
+        .item-sunmit-time {
+            position: relative;
+        }
+
+        .item-examine:after,
+        .item-sunmit-time:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: -14px;
+            width: 0;
+            height: 100%;
+            border-right: 1px solid #f5f5f5;
+        }
+        .last-child {
+            padding-left: 0;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .card-item:last-child p {
+            font-size: 14px;
+            color: #999;
+            line-height: 14px;
+        }
+
+        .card-item:last-child span {
+            font-size: 12px;
+            color: #000;
+            line-height: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="aui-tab" id="tab">
+            <div class="aui-tab-item menus" v-for="(item,index) in list" v-bind:class="{'aui-active': cou_index == index}" @click="change_menu(index)" tapmode="aui-active">
+                {{item.title}}
+            </div>
+        </div>
+        <div id="wrap" class="aui-content border-box">
+            <div class="wrap-card bor-r8 flex flex-v" v-if="cou_index===0 || cou_index===1" v-for="(item,index) in infoList" tapmode @click="showDetails(index)">
+                <div class="card-item flex flex-row flex-justify-space-between  bor-b">
+                    <div class="pairnum">报修单号：<span>{{item.serialnumber}}</span></div>
+                    <div class="more">查看详情</div>
+                </div>
+                <div class="card-item flex flex-row">
+                    <i class="aui-iconfont aui-icon-my card-item-i"></i>
+                    <div class="item-key">联系人：</div>
+                    <div class="item-value user-name">{{item.username}}</div>
+                </div>
+                <div class="card-item flex flex-row">
+                    <i class="aui-iconfont aui-icon-phone card-item-i"></i>
+                    <div class="item-key">联系方式：</div>
+                    <div class="item-value user-phone">{{item.phone}}</div>
+                </div>
+                <div class="card-item flex flex-row">
+                    <i class="aui-iconfont aui-icon-home card-item-i"></i>
+                    <div class="item-key">单元号：</div>
+                    <div class="item-value userhouse">{{item.house}}</div>
+                </div>
+                <div class="card-item flex flex-row bor-b">
+                    <i class="aui-iconfont aui-icon-menu card-item-i"></i>
+                    <div class="item-key">问题分类：</div>
+                    <div class="item-value userproblem">{{item.selected}}</div>
+                </div>
+                <div class="card-item flex flex-row flex-justify-center">
+                    <div class="item-key">提交时间</div>
+                    <div class="item-value usertime">{{item.usertime}}</div>
+                </div>
+            </div>
+            <div class="wrap-card bor-r8 flex flex-v" v-if="cou_index===2" v-for="(item,index) in infoList" tapmode @click="showDetails(index)">
+                <div class="card-item flex flex-row flex-justify-space-between bor-b">
+                    <div class="pairnum">报修单号：<span>{{item.serialnumber}}</span></div>
+                    <div class="more" tapmode @click="showDefault()">查看详情</div>
+                </div>
+                <div class="card-item flex flex-row">
+                    <i class="aui-iconfont aui-icon-my card-item-i"></i>
+                    <div class="item-key">联系人：</div>
+                    <div class="item-value user-name">{{item.username}}</div>
+                </div>
+                <div class="card-item flex flex-row">
+                    <i class="aui-iconfont aui-icon-phone card-item-i"></i>
+                    <div class="item-key">联系方式：</div>
+                    <div class="item-value user-phone">{{item.phone}}</div>
+                </div>
+                <div class="card-item flex flex-row ">
+                    <i class="aui-iconfont aui-icon-home card-item-i"></i>
+                    <div class="item-key">单元号：</div>
+                    <div class="item-value userhouse">{{item.house}}</div>
+                </div>
+                <div class="card-item flex flex-row bor-b">
+                    <i class="aui-iconfont aui-icon-menu card-item-i"></i>
+                    <div class="item-key">问题分类：</div>
+                    <div class="item-value userproblem">{{item.selected}}</div>
+                </div>
+                <div class="card-item flex flex-row flex-justify-space-around last-child" style="height:45px;">
+                    <div class="item-examine flex flex-row">
+                        <i class="iconfont icon-shenhe1 card-item-i"></i>
+                        <div>
+                            <p>处理状态</p>
+                            <!-- <span>{{item.handle_state[item.handle_index]}}</span> -->
+                            <span>处理状态</span>
+                        </div>
+                    </div>
+                    <div class="item-sunmit-time flex flex-row">
+                        <i class="iconfont icon-jinhangzhong card-item-i" style="font-size:14px;"></i>
+                        <div>
+                            <p>提交时间</p>
+                            <!-- <span>{{item.usertime.substring(0, 10)}}</span> -->
+                            <span>提交时间</span>
+                        </div>
+                    </div>
+                    <div class="item-evaluate flex flex-row">
+                        <i class="aui-iconfont aui-icon-comment card-item-i"></i>
+                        <div>
+                            <p>回访状态</p>
+                            <span>未回访</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<!-- <script type="text/javascript" src="../../data/dataList.js"></script> -->
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#app",
+        data: {
+            cou_index: 0, //显示当前索引
+            list: [{
+                title: '已发布'
+            }, {
+                title: '处理中'
+            }, {
+                title: '已完成'
+            }],
+            infoList: {
+              usertime:"",
+              evaluate_state:"",
+              evaluate_index:""
+            },
+            handleState:""
+        },
+        methods: {
+            init: function() {
+                var that = this;
+
+                //判断页面下标
+                if (api.pageParam.pageIndex) {
+                    that.cou_index = api.pageParam.pageIndex;
+                    // console.log("传递的值"+api.pageParam.pageIndex)
+                    getData()
+                } else {
+                    getData()
+                }
+            },
+
+            change_menu: function(index) {
+                //切换菜单
+                this.cou_index = index;
+                getData()
+            },
+            showDetails: function(index_) {
+                //发布表单
+                if (this.cou_index === 0) {
+                    api.openWin({
+                        name: 'admin_details',
+                        url: './admin_details.html',
+                        pageParam: {
+                            name: 'test',
+                            index: index_,
+                            cou_index: 0
+                        }
+                    });
+                } else if (this.cou_index === 1) {
+                    //处理表单
+                    api.openWin({
+                        name: 'admin_handle',
+                        url: './admin_handle.html',
+                        pageParam: {
+                            name: 'test',
+                            index: index_,
+                            cou_index: 1
+                        }
+                    });
+                } else if (this.cou_index === 2) {
+                    //完成表单
+                    api.openWin({
+                        name: 'admin_complete',
+                        url: './admin_complete.html',
+                        pageParam: {
+                            name: 'test',
+                            index: index_,
+                            cou_index: 2
+                        }
+                    });
+                }
+            }
+        }
+
+    });
+    apiready = function() {
+            var nav = $api.byId('tab');
+            //$api.fixStatusBar(header);
+            navH = $api.offset(nav).h;
+            app.init();
+        }
+    //请求数据
+    function getData() {
+        api.showProgress({
+            title: '努力加载中...',
+            text: '请稍等...',
+            modal: false
+        });
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.query({
+            "filter": {
+                "where": {
+                    "admin_state": app.cou_index
+                },
+                "skip": 0,
+                "limit": 20
+            }
+        }, function(ret, err) {
+            api.hideProgress();
+            app.infoList = ret;
+        })
+    };
+</script>
+
+
+</html>

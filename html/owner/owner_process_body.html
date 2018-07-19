@@ -1,0 +1,454 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <style>
+        .border-box {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        .flex-justify-center {
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-justify-content: center;
+            -o-justify-content: center;
+            justify-content: center;
+        }
+
+        .flex-justify-space-between {
+            -webkit-justify-content: space-between;
+            -moz-justify-content: space-between;
+            -ms-justify-content: space-between;
+            -o-justify-content: space-between;
+            justify-content: space-between;
+        }
+
+        .flex-justify-space-around {
+            -webkit-justify-content: space-around;
+            -moz-justify-content: space-around;
+            -ms-justify-content: space-around;
+            -o-justify-content: space-around;
+            justify-content: space-around;
+        }
+
+        .flex-align-center {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .bor-r8 {
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -o-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .i-center {
+            text-align: center;
+            display: block;
+            font-size: 28px;
+        }
+
+        #wrap {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .wrap-process {
+            height: 450px;
+            background: #fff;
+        }
+
+        .con-item {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .item-middle {
+            padding-left: 20px;
+        }
+
+        .middle-describe {
+            text-align: center;
+        }
+
+        .middle-describe i {
+            padding-left: 15px;
+        }
+
+        .serial {
+            position: absolute;
+            top: 22px;
+            left: -20px;
+        }
+
+        .serial-i {
+            position: absolute;
+            font-size: 24px;
+            background: #fff;
+        }
+
+        .serial-line {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 2px;
+            height: 90px;
+            background: #000;
+        }
+
+        .active {
+            color: #09C2DE;
+        }
+
+        .active-bg {
+            background: #09C2DE;
+        }
+
+        .wrap-card {
+            width: 100%;
+            background: #fff;
+            margin-top: 10px;
+            padding: 10px;
+            font-family: "Microsoft Yahei"
+        }
+
+        .bor-b {
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .card-item {
+            height: 45px;
+            padding-left: 10px;
+        }
+
+        .card-item:last-child {
+            padding-left: 0;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .pairnum {
+            font-size: 16px;
+            line-height: 35px;
+            color: #09C2DE;
+        }
+
+        .more {
+            font-size: 12px;
+            line-height: 35px;
+            color: #BBBBBB;
+        }
+
+        .item-key,
+        .card-item-i {
+            font-size: 14px;
+            line-height: 35px;
+            color: #999;
+        }
+
+        .item-value {
+            font-size: 16px;
+            line-height: 35px;
+            color: #000;
+        }
+
+        .card-item-i {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+
+        .item-examine,
+        .item-sunmit-time {
+            position: relative;
+        }
+
+        .item-examine:after,
+        .item-sunmit-time:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: -14px;
+            width: 0;
+            height: 100%;
+            border-right: 1px solid #f5f5f5;
+        }
+
+        .card-item:last-child p {
+            font-size: 14px;
+            color: #999;
+            line-height: 14px;
+        }
+
+        .card-item:last-child span {
+            font-size: 14px;
+            color: #000;
+            line-height: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content border-box" id="wrap">
+        <div class="wrap-process bor-r8 flex flex-justify-center flex-align-center">
+            <div class="process-container flex-v ">
+                <div class="con-item" v-for="(item,index) in setState">
+                    <div class="item-middle " :class="item.active">
+                        <div class="middle-icon">
+                            <i class="iconfont  i-center" :class="item.iconX"></i>
+                        </div>
+                        <div class="middle-describe">
+                            {{item.font}}
+                            <i class="iconfont icon-cuowu" v-if="item.isIcon===0"></i>
+                            <i class="iconfont icon-wuuiconxuan" v-if="item.isIcon===1"></i>
+                            <i class="iconfont icon-jinhangzhong" v-if="item.isIcon===2"></i>
+                        </div>
+                    </div>
+                    <div class="serial">
+                        <div class="serial-line" v-if="item.isLine" :class="item.activeBg"></div>
+                        <i class="iconfont serial-i " :class="[item.iconNum,item.active]"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="wrap-card bor-r8 flex flex-v">
+            <div class="card-item flex flex-row flex-justify-space-between bor-b">
+                <div class="pairnum">报修单号：<span>{{serialnumber}}</span></div>
+                <div class="more" tapmode @click="showDefault()">查看详情</div>
+            </div>
+            <div class="card-item flex flex-row">
+                <i class="aui-iconfont aui-icon-my card-item-i"></i>
+                <div class="item-key">联系人：</div>
+                <div class="item-value user-name">{{username}}</div>
+            </div>
+            <div class="card-item flex flex-row">
+                <i class="aui-iconfont aui-icon-phone card-item-i"></i>
+                <div class="item-key">联系方式：</div>
+                <div class="item-value user-phone">{{phone}}</div>
+            </div>
+            <div class="card-item flex flex-row bor-b">
+                <i class="aui-iconfont aui-icon-home card-item-i"></i>
+                <div class="item-key">单元号：</div>
+                <div class="item-value userhouse">{{house}}</div>
+            </div>
+            <div class="card-item flex flex-row flex-justify-space-around">
+                <div class="item-examine flex flex-row">
+                    <i class="iconfont icon-shenhe1 card-item-i"></i>
+                    <div>
+                        <p>处理状态</p>
+                        <span>{{handleState}}</span>
+                    </div>
+                </div>
+                <div class="item-sunmit-time flex flex-row">
+                    <i class="iconfont icon-jinhangzhong card-item-i" style="font-size:14px;"></i>
+                    <div>
+                        <p>提交时间</p>
+                        <span>{{handle_usertime}}</span>
+                    </div>
+                </div>
+                <div class="item-evaluate flex flex-row" tapmode @click="fnOpenEvaluate()">
+                    <i class="aui-iconfont aui-icon-comment card-item-i"></i>
+                    <div>
+                        <p>评价状态</p>
+                        <span>{{evaluateState}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-content-padded" tapmode @click="showDefault()">
+            <div class="aui-btn aui-btn-info aui-btn-block">查看更多</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#wrap",
+        data: {
+            id: "",
+            serialnumber: "",
+            username: "",
+            phone: "",
+            usertime: "",
+            house: "",
+            selected: "",
+            description: "",
+            evaluate_state: "",
+            evaluate_index: "",
+            handle_state: "",
+            handle_index: 1,
+            procer: [
+              {font:"填写信息提交初审", iconX:'icon-tianxie',iconNum:'icon-1',isLine:true, isIcon:1,activeBg: "active-bg",active: "active"},
+              {font:"物业管理部审核中",iconX:'icon-shenhe1',iconNum:'icon-2',isLine:true,isIcon:1,activeBg: "active-bg",active: "active"},
+              {font:"维修师傅接单中",iconX:'icon-1shangmen',iconNum:'icon-3',isLine:true,isIcon:2,activeBg: "",active: ""},
+              {font:"正在维修中",iconX:'icon-weixiu',iconNum:'icon-4',isLine:true,isIcon:0,activeBg: "",active: ""},
+              {font:"维修已完成",iconX:'icon-fabu',iconNum:'icon-5',isLine:false,isIcon:0,activeBg: "",active: ""}
+            ],
+        },
+        methods: {
+            init: function() {
+                console.log(JSON.stringify(this.setState));
+                this.id = $api.getStorage('usernameId');
+                getData();
+
+            },
+            //点击评价状态 打开评价页面
+            fnOpenEvaluate:function(){
+                if(app.handle_index===4){
+                    if(app.evaluate_index===0){
+                        api.openWin({
+                          name: 'owner_evaluate',
+                          url: './owner_evaluate.html',
+                          pageParam: {
+                              name: 'test'
+                          }
+                      });
+                    }else if(app.evaluate_index===1){
+                       api.openWin({
+                            name: 'evaluate_complete',
+                            url: './evaluate_complete.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                      });
+                    }
+                }else{
+                    api.toast({
+                        msg: '请等待维修完成后评价',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+
+            },
+            showDefault: function() {
+                api.openWin({
+                    name: 'owner_details',
+                    url: './owner_details.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+
+            }
+        },
+        computed: {
+            //提交时间
+            handle_usertime: function() {
+                return this.usertime.substring(0, 10)
+            },
+            //处理状态
+            evaluateState: function() {
+                return this.evaluate_state[this.evaluate_index]
+            },
+            //评价状态
+            handleState: function() {
+                return this.handle_state[this.handle_index]
+            },
+            //报修进度class
+            setState: function () {
+                var array = this.procer;
+                var state = this.handle_index;
+                for (var i = 0; i < 5; i++) {
+                    if (i < state) {
+                        array[i].activeBg = "active-bg";
+                        array[i].isIcon = 1;
+                        array[i].active = "active";
+                    } else if (i === 4 && i === state) {
+                        array[i].activeBg = "";
+                        array[i].isIcon = 1;
+                        array[i].active = "active";
+                    } else if (i === state) {
+
+                        array[i].activeBg = "";
+                        array[i].isIcon = 2;
+                        array[i].active = "active";
+
+                    } else {
+                        array[i].activeBg = "";
+                        array[i].isIcon = 0;
+                        array[i].active = "";
+                    }
+                }
+                this.setState = array
+                return array;
+            },
+        }
+
+    })
+    apiready = function() {
+        app.init();
+
+    };
+    //请求数据
+    function getData() {
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        console.log(Datalist)
+        Datalist.get({
+            "_id": app.id
+        }, function(ret, err) {
+            console.log(JSON.stringify(ret))
+            app.serialnumber = ret.serialnumber;
+            app.username = ret.username;
+            app.phone = ret.phone;
+            app.usertime = ret.usertime;
+            app.house = ret.house;
+            app.description = ret.description;
+            app.handle_state = ret.handle_state;
+            app.selected = ret.selected;
+            app.evaluate_index = ret.evaluate_index;
+            app.handle_index = ret.handle_index;
+            app.evaluate_state = ret.evaluate_state;
+            app.handle_state = ret.handle_state;
+        })
+    };
+</script>
+
+</html>

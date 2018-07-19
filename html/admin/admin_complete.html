@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav " id="header">
+        <a class="aui-pull-left" tapmode onclick="api.closeWin()"> <span class="aui-iconfont aui-icon-left"></span></a>
+        <div class="aui-title">管理中心-已完成</div>
+    </header>
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item" v-for="(item,index) in list" v-bind:class="{'aui-active': cou_index == index}" @click="change_menu(index)" tapmode="aui-active">
+          {{item.title}}
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+      el:"#tab",
+      data:{
+        cou_index: 0, //显示当前索引
+        list: [{
+            title: '维修信息'
+        }, {
+            title: '回访信息'
+        }],
+      },
+      methods:{
+        init:function(){
+          fnOpenFrameGroup();
+        },
+        change_menu: function(index) {
+            //切换菜单
+            this.cou_index = index;
+            api.setFrameGroupIndex({
+                name: 'IndexGroup',
+                index: index
+            });
+
+        },
+      }
+    })
+    function fnOpenFrameGroup(){
+      api.openFrameGroup({
+          name: 'IndexGroup',
+          rect: {
+              x: 0,
+              y: headerH + navH,
+              w: 'auto',
+              h: 'auto'
+          },
+          index: 0,
+          frames: [{
+                name: 'admin_complete_body1',
+                url: './admin_complete_body1.html',
+                bgColor: '#fff',
+                pageParam:{
+                  index:api.pageParam.index,
+                  couIndex: api.pageParam.cou_index
+                }
+            }, {
+                name: 'admin_complete_body2' ,
+                url: './admin_complete_body2.html',
+                bgColor: '#fff',
+                pageParam:{
+                  index:api.pageParam.index,
+                  couIndex: api.pageParam.cou_index,
+              }
+            }]
+      }, function(ret, err) {
+          if (ret) {
+            app.cou_index = ret.index
+            //console.log(JSON.stringify(ret));
+          } else {
+              alert(JSON.stringify(err));
+          }
+      });
+    }
+    var haderNav;
+    apiready = function() {
+        var header = $api.byId('header');
+        var nav = $api.byId('tab');
+        //$api.fixStatusBar(header);
+        headerH = $api.offset(header).h;
+        navH = $api.offset(nav).h;
+         haderNav = headerH+navH;
+        app.init()
+    };
+</script>
+
+</html>

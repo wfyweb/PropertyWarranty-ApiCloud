@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>此页面仅测试！！！</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <style>
+        .border-box {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        .flex-justify-center {
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-justify-content: center;
+            -o-justify-content: center;
+            justify-content: center;
+        }
+
+        .flex-justify-space-between {
+            -webkit-justify-content: space-between;
+            -moz-justify-content: space-between;
+            -ms-justify-content: space-between;
+            -o-justify-content: space-between;
+            justify-content: space-between;
+        }
+
+        .flex-justify-space-around {
+            -webkit-justify-content: space-around;
+            -moz-justify-content: space-around;
+            -ms-justify-content: space-around;
+            -o-justify-content: space-around;
+            justify-content: space-around;
+        }
+
+        .flex-align-center {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .bor-r8 {
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -o-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .i-center {
+            text-align: center;
+            display: block;
+            font-size: 28px;
+        }
+
+        #wrap {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .wrap-card {
+            width: 100%;
+            background: #fff;
+            margin-bottom: 10px;
+            padding: 10px 10px 0 10px;
+            font-family: "Microsoft Yahei"
+        }
+
+        .bor-b {
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .card-item {
+            height: 40px;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .card-item:last-child {
+            padding-left: 0;
+            text-align: center;
+        }
+
+        .pairnum {
+            font-size: 14px;
+            line-height: 35px;
+            color: #09C2DE;
+        }
+
+        .more {
+            font-size: 12px;
+            line-height: 35px;
+            color: #BBBBBB;
+        }
+
+        .item-key,
+        .card-item-i {
+            font-size: 14px;
+            line-height: 35px;
+            color: #999;
+        }
+
+        .item-value {
+            font-size: 14px;
+            line-height: 35px;
+            color: #000;
+        }
+
+        .card-item-i {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .item-key {
+            width: 25%;
+        }
+
+        .usertime {
+            color: #999;
+        }
+
+        .card-item:last-child p {
+            font-size: 14px;
+            color: #999;
+            line-height: 14px;
+        }
+
+        .card-item:last-child span {
+            font-size: 14px;
+            color: #000;
+            line-height: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" class="aui-content border-box">
+        <div class="wrap-card bor-r8 flex flex-v" v-for="(item,index) in infoList">
+            <div class="card-item flex flex-row flex-justify-space-between  bor-b">
+                <div class="pairnum">报修单号：<span>{{item.pairnum}}</span></div>
+                <div class="more" tapmode @onclick="showDefault(index)">查看详情</div>
+            </div>
+            <div class="card-item flex flex-row" v-for=" item in item.userlist">
+                <i class="aui-iconfont aui-icon-my card-item-i"></i>
+                <div class="item-key">{{item.usernamekey}}：</div>
+                <div class="item-value user-name">{{item.usernameval}}</div>
+            </div>
+            <!-- <div class="card-item flex flex-row">
+                <i class="aui-iconfont aui-icon-phone card-item-i"></i>
+                <div class="item-key">联系方式：</div>
+                <div class="item-value user-phone">{{item.userlist.phone.phoneval}}</div>
+            </div>
+            <div class="card-item flex flex-row">
+                <i class="aui-iconfont aui-icon-home card-item-i"></i>
+                <div class="item-key">单元号：</div>
+                <div class="item-value userhouse">{{item.userlist.house.houseval}}</div>
+            </div>
+            <div class="card-item flex flex-row bor-b">
+                <i class="aui-iconfont aui-icon-menu card-item-i"></i>
+                <div class="item-key">问题分类：</div>
+                <div class="item-value userproblem">{{item.userlist.problem.problemval}}</div>
+            </div> -->
+            <div class="card-item flex flex-row flex-justify-center">
+                <div class="item-key">提交时间</div>
+                <div class="item-value usertime">{{item.usertime}}</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#wrap",
+        data: {
+            infoList: [{
+                pairnum: "201803150001",
+                usertime: "2018-4-15",
+                userlist: [{
+                    usernamekey: "联系人",
+                    usernameval: "张三1（已发布）",
+                }, {
+                    usernamekey: "联系方式",
+                    usernameval: "15332321165",
+                }, {
+                    usernamekey: "单元号",
+                    usernameval: "山水 22-11",
+                }, {
+                    usernamekey: "问题分类",
+                    usernameval: "水管问题",
+                }]
+            }, {
+                pairnum: "201803150002",
+                usertime: "2018-4-15",
+                userlist: [{
+                    usernamekey: "联系人",
+                    usernameval: "张三2（已发布）",
+                }, {
+                    usernamekey: "联系方式",
+                    usernameval: "15332321165",
+                }, {
+                    usernamekey: "单元号",
+                    usernameval: "山水 22-11",
+                }, {
+                    usernamekey: "问题分类",
+                    usernameval: "水管问题",
+                }]
+            }, {
+                pairnum: "201803150003",
+                usertime: "2018-4-15",
+                userlist: [{
+                    usernamekey: "联系人",
+                    usernameval: "张三3（已发布）",
+                }, {
+                    usernamekey: "联系方式",
+                    usernameval: "15332321165",
+                }, {
+                    usernamekey: "单元号",
+                    usernameval: "山水 22-11",
+                }, {
+                    usernamekey: "问题分类",
+                    usernameval: "水管问题",
+                }]
+            }],
+        },
+        methods: {
+
+        }
+    })
+    apiready = function() {
+
+
+
+    };
+</script>
+
+
+</html>

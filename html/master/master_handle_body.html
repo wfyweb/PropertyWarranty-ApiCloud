@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        b {
+            color: red;
+        }
+        .mar-t-10{
+          margin-top: 10px;
+        }
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+        .aui-list-item-input input {
+            color: #757575;
+        }
+
+        #select {
+            color: #757575;
+        }
+
+        #borde-top{
+            background-image: none;
+        }
+        .evaluate-content {
+            width: 100%;
+        }
+
+        .evaluate-content-title {
+            width: 45%;
+            margin-top: 10px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .evaluate-content-box {
+            width: 100%;
+            padding: 0 10px 10px 10px;
+            min-height: 100px;
+            margin-top: 50px;
+        }
+        .autopic{
+            width: 100%;
+            height: 5.55rem;
+            line-height: 5.55rem;
+            display: block;
+            margin:auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content" id="app" v-cloak>
+        <ul class="aui-list aui-form-list">
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      报修单号：
+                  </div>
+                  <div class="aui-list-item-input">
+                     {{infoList.serialnumber}}
+                  </div>
+              </div>
+          </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系人：
+                    </div>
+                    <div class="aui-list-item-input">
+                      {{infoList.username}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系电话：
+                    </div>
+                    <div class="aui-list-item-input">
+                      {{infoList.phone}}
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        报修日期：
+                    </div>
+                    <div class="aui-list-item-input">
+                      {{infoList.usertime}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        单元号：
+                    </div>
+                    <div class="aui-list-item-input">
+                      {{infoList.house}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题分类：
+                    </div>
+                    <div class="aui-list-item-input">
+                     {{infoList.selected}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item ">
+              <div class="evaluate-content flex flex-row">
+                  <div class="evaluate-content-title">
+                      维修内容：
+                  </div>
+                  <div class="evaluate-content-box">
+                       {{infoList.description}}
+                  </div>
+              </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-media-list" id="borde-top">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">问题图片：</div>
+                    <div class="aui-row aui-row-padded mar-t-10" >
+                      <div class="aui-col-xs-4" v-for="(item,index) in infoList.imgUrl" @click="fnOpenPicSlide(index)" tapmode>
+                        <img :src="item" class="autopic" />
+                     </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理时间：
+                    </div>
+                    <div class="aui-list-item-input">
+                      {{infoList.handle_time}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理人：
+                    </div>
+                    <div class="aui-list-item-input">
+                         {{infoList.handle_people}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        维修师傅：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.maintain_people}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        师傅电话：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.maintain_phone}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="width:60%;">
+                        派单状态：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{serialState}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="width:60%;">
+                        维修状态：
+                    </div>
+                    <div class="aui-list-item-input">
+                        <!-- <input type="text" v-model="handleState"> -->
+                        <select id="select" @chaneg="selectVal" v-model="handleState">
+                            <option v-for="item in handle_state" >{{item}}</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="width:60%;">
+                        预约维修时间：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.maintain_time}}
+                    </div>
+                </div>
+            </li>
+
+        </ui>
+        <div class="aui-content-padded" tapmode @click="showDefault()">
+            <div class="aui-btn aui-btn-info aui-btn-block">确定</div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el:"#app",
+        data: {
+            infoList:[],
+            handleState:"",
+            serialState:"",
+            handle_state:["师傅接单中","正在维修","维修完成"],
+            handle_index:"",
+
+            // admin_state:1,
+            // master_state:1,
+        },
+        methods:{
+            init:function(){
+              var list_index = api.pageParam.index;
+              var cou_index = api.pageParam.cou_index;
+              getData(cou_index, list_index);
+            },
+            selectVal: function(ele) {
+                this.infoList.selected = ele.terage.value;
+            },
+            showDefault:function() {
+                postData();
+                //api.closeWin();
+                api.sendEvent({
+                    name: 'return_handle',
+                    extra: {
+                        key1: 'value1'
+                    }
+                });
+                if(this.handle_index===4){
+                  console.log('需要跳转到已经完成了')
+                  api.openWin({
+                      name: 'master',
+                      url: './master.html',
+                      pageParam: {
+                          name: 'test',
+                          pageIndex:2
+                      },
+
+                  });
+                }else{
+                  api.openWin({
+                      name: 'master',
+                      url: './master.html',
+                      pageParam: {
+                          name: 'test'
+                      },
+
+                  });
+                }
+
+            },
+            fnOpenPicSlide: function(index_) {
+                var that = this,
+                    activeIndex = index_;
+                var imageBrowser = api.require('imageBrowser');
+                imageBrowser.openImages({
+                    activeIndex: activeIndex,
+                    imageUrls: that.infoList.imgUrl,
+                });
+            },
+        },
+        watch:{
+            handleState:function(val){
+                if (val===this.handle_state[0]) {
+                    return this.handle_index = 2;
+                }else if(val===this.handle_state[1]){
+                    return this.handle_index = 3;
+                }else if(val===this.handle_state[2]){
+                    // 如果师傅提交维修完成，状态为2
+                    // this.admin_state = 2;
+                    // this.master_state = 2;
+                    return this.handle_index = 4;
+                }
+            }
+        }
+    });
+    apiready = function() {
+        app.init();
+    };
+    function getData(cou_index, list_index) {
+        api.showProgress({
+            title: '努力加载中...',
+            text: '请稍等...',
+            modal: false
+        });
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.query({
+            "filter": {
+                "where": {
+                    "master_state": cou_index
+                },
+                "skip": 0,
+                "limit": 20
+            }
+        }, function(ret, err) {
+            app.infoList = ret[list_index];
+            // 赋值 派单状态
+
+            app.serialState = app.infoList.serial_state[app.infoList.serial_index];
+            app.handleState = app.infoList.handle_state[app.infoList.handle_index];
+            api.hideProgress();
+        })
+    };
+    function postData() {
+      api.showProgress({
+          title: '努力加载中...',
+          text: '请稍等...',
+          modal: false
+      });
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.save({
+                "_id": app.infoList.id
+            }, {
+                //解除师傅控制完成状态=》业主控制完成状态
+                // admin_state:app.admin_state,  // 维修师傅状态：已接单
+                // master_state:app.master_state,
+                handle_index:app.handle_index
+            },
+            function(ret, err) {
+              api.hideProgress();
+                //console.log(JSON.stringify(ret))
+            })
+    }
+</script>
+
+</html>

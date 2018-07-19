@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        label {
+            margin: 10px;
+            font-size: 24px;
+        }
+
+        ul {
+            margin-bottom: 10px;
+        }
+
+        ul li {
+            margin: 5px 10px;
+            padding: 5px;
+            color: #000;
+            word-wrap: break-word;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            margin: 50px auto;
+            ;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header" onclick="fnopenGetData()">get请求获取数据</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- 用apicloud云服务需要加密key  SHA1-->
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<!-- 基于api.ajax而写的原生 JavaScript类库 -->
+<script type="text/javascript" src="../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+
+    };
+    function fnopenGetData() {
+        // //mcm-js-sdk 发送
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.query({
+                "filter": {
+                    "where": {},
+                    "skip": 0,
+                    "limit": 20
+                }
+            }, function(ret, err) {
+                console.log(JSON.stringify(ret))
+            })
+    }
+</script>
+
+</html>

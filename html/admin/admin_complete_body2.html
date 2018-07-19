@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        b {
+            color: red;
+        }
+
+        .mar-t-10 {
+            margin-top: 10px;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+        #select {
+            color: #757575;
+        }
+        #borde-top {
+            background-image: none;
+        }
+
+        .evaluate-content {
+            width: 100%;
+        }
+
+        .evaluate-content-title {
+            width: 35%;
+            margin-top: 10px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .evaluate-content-box {
+            width: 100%;
+            padding: 0 10px 10px 10px;
+            min-height: 100px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content" id="app" v-cloak>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        回访时间：
+                    </div>
+                    <div class="aui-list-item-input">
+                      <span v-if="infoList.return_time">{{infoList.return_time}}</span>
+                      <input type="text" placeholder="填写回访时间" v-model="infoList.return_time" v-else>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        回访人：
+                    </div>
+                    <div class="aui-list-item-input">
+                      <span v-if="infoList.return_people">{{infoList.return_people}}</span>
+                      <input type="text" placeholder="填写回访人" v-model="infoList.return_people" v-else>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        回访对象：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.username}}
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        维修师傅：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.maintain_people}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        师傅电话：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.maintain_phone}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="width:40%">
+                        维修时间：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.maintain_time}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        工作态度：
+                    </div>
+                    <div class="aui-list-item-input">
+                      <span v-if="infoList.work_attitude">{{infoList.work_attitude}}</span>
+                      <input type="text" placeholder="填写工作态度" v-model="infoList.work_attitude" v-else>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        维修质量：
+                    </div>
+                    <div class="aui-list-item-input">
+                      <span v-if="infoList.maintain_quality">{{infoList.maintain_quality}}</span>
+                        <input type="text" placeholder="填写维修质量" v-model="infoList.maintain_quality" v-else>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item ">
+                <div class="evaluate-content flex flex-row">
+                    <div class="evaluate-content-title">
+                        业主建议：
+                    </div>
+                    <div class="evaluate-content-box">
+                      <span v-if="infoList.return_opinion">  {{infoList.return_opinion}}</span>
+                      <textarea id="text" name="name" placeholder="填写回访后业主的建议" v-model="infoList.return_opinion" v-else></textarea>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div  v-if="infoList.return_time"></div>
+        <div class="aui-content-padded" tepmode @click="showDefault()" v-else>
+            <div class="aui-btn aui-btn-info aui-btn-block">确定</div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#app",
+        data: {
+            infoList: {
+              return_time:"",
+              return_people:"",
+              work_attitude:"",
+              maintain_quality:"",
+              return_opinion:""
+            }
+            // return_time:"2018-3-15",
+            // return_people:"客服 刘",
+            // return_username: "张三",
+            // maintain_people: "张师傅",
+            // maintain_phone: "15343665566",
+            // maintain_time: "2018-3-15",
+            // work_attitude:"满意",
+            // maintain_quality:"质量过关",
+            // return_opinion:"1、加强巡逻力度。2、加强管理。"
+        },
+        methods: {
+            init: function() {
+              var list_index = api.pageParam.index;
+              var cou_index = api.pageParam.couIndex;
+              getData(cou_index, list_index);
+            },
+            showDefault: function() {
+                var toast = new auiToast();
+                toast.success({
+                    title: "提交成功",
+                    duration: 1000,
+                    location: 'bottom'
+                });
+                postData();
+                api.openWin({
+                    name: 'admin',
+                    url: './admin.html',
+                    pageParam: {
+                        name: 'test',
+                        pageIndex: '2',
+                    }
+                });
+            },
+        }
+    }) 
+    apiready = function() {
+        api.parseTapmode();
+        app.init();
+
+    };
+    function getData(cou_index, list_index) {
+        api.showProgress({
+            title: '努力加载中...',
+            text: '请稍等...',
+            modal: false
+        });
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.query({
+            "filter": {
+                "where": {
+                    "admin_state": cou_index
+                },
+                "skip": 0,
+                "limit": 20
+            }
+        }, function(ret, err) {
+            app.infoList = ret[list_index];
+            console.log(JSON.stringify(app.infoList))
+            api.hideProgress();
+        })
+    };
+    //数据提交
+    function postData() {
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.save(
+            {"_id":app.infoList.id},
+            {
+              return_time:app.infoList.return_time,
+              return_people:app.infoList.return_people,
+              work_attitude:app.infoList.work_attitude,
+              maintain_quality:app.infoList.maintain_quality,
+              return_opinion:app.infoList.return_opinion
+            },
+            function(ret, err) {
+              app.infoList = ret
+                //console.log(JSON.stringify(ret))
+                //alert(JSON.stringify(ret))
+
+        })
+    }
+</script>
+
+</html>

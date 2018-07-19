@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui-iconfont.css" />
+    <style>
+        .disnone {
+            display: none;
+        }
+
+        .disblock {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header class="aui-bar aui-bar-nav disnone" :class="{'disblock': cou_index== index}" v-for="(item,index) in list">
+            {{item.title}}
+        </header>
+        <footer class="aui-bar aui-bar-tab" id="footer">
+            <div class="aui-bar-tab-item" v-for="(item,index) in list" v-bind:class="{'aui-active': cou_index == index}" @click="change_menu(index)" tapmode>
+                <i class="aui-iconfont aui-icon-home" v-if="index == 0"></i>
+                <i class="aui-iconfont aui-icon-comment" v-if="index == 1"></i>
+                <i class="aui-iconfont aui-icon-my" v-if="index ==2"></i>
+                <div class="aui-bar-tab-label">
+                    {{item.title}}
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
+<script type="text/javascript">
+     var app = new Vue({
+            el:"#app",
+            data:{
+                cou_index: 0, //显示当前索引
+                list: [{
+                    title: '首页'
+                }, {
+                    title: '服务中心'
+                }, {
+                    title: '我的'
+                }]
+            },
+            methods:{
+                init:function(){
+                    showIndex();
+                    //监听设备 back 返回键被点击事件
+                    fnInitEventListenner();
+                },
+                change_menu:function(index){
+                    //切换菜单
+                    this.cou_index = index;
+                    api.setFrameGroupIndex({
+                        name: 'IndexGroup',
+                        index: index
+                    });
+                }
+            }
+        })
+    function showIndex(){
+        api.openFrameGroup ({
+            name: 'IndexGroup',
+            rect: {
+                 x: 0,
+                 y: $api.dom('header').offsetHeight,
+                 w: 'auto',
+                 h: api.winHeight - $api.dom('header').offsetHeight - $api.dom('footer').offsetHeight
+            },
+            index: 0,
+            frames: [{
+                name: 'frame1',
+                url: './frame1.html',
+                bgColor: '#fff'
+            },{
+                name: 'frame2',
+                url: './frame2.html',
+                bgColor: '#fff'
+            }, {
+                name: 'frame3',
+                url: './frame3.html',
+                bgColor: '#fff'
+            }]
+        }, function(ret, err){
+            if( ret ){
+                 //alert( JSON.stringify( ret ) );
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    apiready = function() {
+        var headerH = $api.dom('header').offsetHeight;
+        var footerH =$api.dom('footer').offsetHeight;
+        $api.setStorage("Header-height", $api.dom('header').offsetHeight);
+        //全局保存头部高度
+        $api.setStorage("Footer-height", $api.dom('footer').offsetHeight);
+        //全局保存底部高度
+        var headerlist = $api.domAll('header');
+        for (var i = 0; i < headerlist.length; i++) {
+            $api.fixIos7Bar(headerlist[i]);
+                //修复ios系统bar
+        }
+        app.init();
+    };
+    function fnInitEventListenner() {
+        //监听设备 back 返回键被点击事件
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            if (err) throw err;
+            api.confirm({
+                title: '提示',
+                msg: '是否退出应用',
+                buttons: ['确定', '取消']
+            }, function(ret, err) {
+                if (ret.buttonIndex == 1) {
+                    api.closeWidget()
+                }
+            });
+        });
+
+    }
+
+</script>
+
+</html>

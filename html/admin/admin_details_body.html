@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        b {
+            color: red;
+        }
+
+        .mar-t-10 {
+            margin-top: 10px;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .flex-v {
+            -webkit-box-orient: vertical;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .flex-row {
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .aui-list-item-input input {
+            color: #757575;
+        }
+
+        #select {
+            color: #757575;
+        }
+
+        #borde-top {
+            background-image: none;
+        }
+
+        .evaluate-content {
+            width: 100%;
+        }
+
+        .evaluate-content-title {
+            width: 45%;
+            margin-top: 10px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .evaluate-content-box {
+            width: 100%;
+            padding: 0 10px 10px 10px;
+            min-height: 100px;
+            margin-top: 50px;
+        }
+
+        .autopic {
+            width: 100%;
+            height: 5.55rem;
+            line-height: 5.55rem;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content" id="app" v-cloak>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        报修单号：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.serialnumber}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系人：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.username}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系电话：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.phone}}
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        报修日期：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.usertime}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        单元号：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.house}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题分类：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.selected}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item ">
+                <div class="evaluate-content flex flex-row">
+                    <div class="evaluate-content-title">
+                        维修内容：
+                    </div>
+                    <div class="evaluate-content-box">
+                        {{infoList.description}}
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-media-list" id="borde-top">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">问题图片：</div>
+                    <div class="aui-row aui-row-padded mar-t-10">
+                        <div class="aui-col-xs-4" v-for="(item,index) in infoList.imgUrl" @click="fnOpenPicSlide(index)" tapmode>
+                            <img :src="item" class="autopic" />
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理时间：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{infoList.handle_time}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        受理人：<b>*</b>
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请填写受理人" v-model="infoList.handle_people">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        维修师傅：<b>*</b>
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请填写维修师傅" v-model="infoList.maintain_people">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        师傅电话：<b>*</b>
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请填写维修师傅电话" v-model="infoList.maintain_phone">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="width:60%;">
+                        派单状态：
+                    </div>
+                    <div class="aui-list-item-input">
+                        {{serialState}}
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="width:60%;">
+                        预约维修时间：<b>*</b>
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请填写预约维修时间" v-model="infoList.maintain_time">
+                    </div>
+                </div>
+            </li>
+
+            </ui>
+            <div class="aui-content-padded" tapmode @click="showDefault()">
+                <div class="aui-btn aui-btn-info aui-btn-block">派单</div>
+            </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#app",
+        data: {
+            serialState:"",
+            infoList:""
+            // serialnumber:"201841900001",
+            // username: "张三",
+            // phone: "15323245",
+            // usertime: "new 2018-4-19",
+            // house: "山水 45-51",
+            // description: "下水道坏了！",
+            // selected: "水管问题",
+            // imgUrl: [
+            //     "https://picsum.photos/200/400",
+            //     "https://picsum.photos/200/200",
+            //     "https://picsum.photos/400/200"
+            // ],
+            // handle_time: "2018-2-12",
+            // handle_people: "",
+            // maintain_people: "",
+            // maintain_phone: "",
+            // serial_state:"未派单",
+            // maintain_time: "",
+        },
+        methods: {
+            init: function() {
+                var list_index = api.pageParam.index;
+                var cou_index = api.pageParam.cou_index;
+                getData(cou_index, list_index);
+            },
+            showDefault: function() {
+                if (!this.infoList.handle_people) {
+                    api.toast({
+                        msg: '请填写受理人',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+                if (!this.infoList.maintain_people) {
+                    api.toast({
+                        msg: '请填写维修师傅',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+                if (!(/^1[0-9]{10}$/).test(this.infoList.maintain_phone)) {
+                    api.toast({
+                        msg: '请填写维修师傅电话',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+                if (!this.infoList.maintain_time) {
+                    api.toast({
+                        msg: '请填写预约维修时间',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+                var toast = new auiToast();
+                toast.success({
+                    title: "提交成功",
+                    duration: 1000,
+                    location: 'bottom'
+                });
+                postData();
+                api.openWin({
+                    name: 'admin',
+                    url: './admin.html',
+                    pageParam: {
+                        name: 'test',
+                        pageIndex: 1
+                    },
+                    //打开页面，从新加载
+                    reload: true
+                });
+            },
+            //图片浏览
+            fnOpenPicSlide: function(index_) {
+                var that = this,
+                    activeIndex = index_;
+                var imageBrowser = api.require('imageBrowser');
+                imageBrowser.openImages({
+                    activeIndex: activeIndex,
+                    imageUrls: that.infoList.imgUrl
+                });
+            }
+        }
+    })
+    apiready = function() {
+        api.parseTapmode();
+        app.init();
+    };
+
+    function getData(cou_index, list_index) {
+        api.showProgress({
+            title: '努力加载中...',
+            text: '请稍等...',
+            modal: false
+        });
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.query({
+            "filter": {
+                "where": {
+                    "admin_state": cou_index
+                },
+                "skip": 0,
+                "limit": 20
+            }
+        }, function(ret, err) {
+            app.infoList = ret[list_index];
+            // 赋值 派单状态
+            app.serialState = app.infoList.serial_state[app.infoList.serial_index];
+            //获取当前时间 => 受理时间
+            getNowFormatDate();
+            api.hideProgress();
+        })
+    };
+
+    function postData() {
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.save({
+                "_id": app.infoList.id
+            }, {
+                handle_time: app.infoList.handle_time,
+                handle_people: app.infoList.handle_people,
+                maintain_people: app.infoList.maintain_people,
+                maintain_phone: app.infoList.maintain_phone,
+                maintain_time: app.infoList.maintain_time,
+
+                admin_state:1,   // 管理中心状态
+                master_state:1,   // 维修师傅状态
+                serial_index: 1, // 派单状态
+                handle_index:2   // 维修状态
+
+            },
+            function(ret, err) {
+                console.log(JSON.stringify(ret))
+
+            })
+    }
+    //获取当前日期
+    function getNowFormatDate() {
+        var newdate = new Date();
+        var year = newdate.getFullYear();
+        var month = newdate.getMonth() + 1;
+        var day = newdate.getDate();
+        var hours = newdate.getHours();
+        var minutes = newdate.getMinutes();
+        var seconds = newdate.getSeconds()
+        if (month >= 1 && month <= 9) {
+            month = "0" + month
+        };
+        if (day >= 0 && day <= 9) {
+            day = "0" + day
+        };
+        if (minutes >= 0 && minutes <= 9) {
+            minutes = "0" + minutes
+        };
+        if (seconds >= 0 && seconds <= 9) {
+            seconds = "0" + seconds
+        };
+        var currentdate = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+        return app.infoList.handle_time =currentdate;
+
+    }
+</script>
+
+</html>

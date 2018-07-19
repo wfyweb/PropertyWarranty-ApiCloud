@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        b {
+            padding-left: 4px;
+            color: red;
+        }
+
+        .item-textarea {
+            height: 120px;
+        }
+
+        .aui-list-item-input input {
+            color: #757575;
+        }
+
+        #select {
+            color: #757575;
+        }
+
+        .aui-list-item-input span {
+            color: #757575;
+        }
+
+        #txt {
+            width: 100%;
+            height: 90px;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        #borde-top {
+            background-image: none;
+        }
+
+        .add-photos>div {
+            width: 100%;
+            height: 5.55rem;
+            line-height: 5.55rem;
+        }
+
+        .add-photos>div .aui-iconfont {
+            font-size: 2rem;
+            color: #ccc;
+        }
+
+        .autopic {
+            width: 100%;
+            max-width: 100%;
+            height: 5.55rem;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content" id="app" v-cloak>
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系人
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" v-model="username">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系电话
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{phone}}</span>
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        报修日期
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>{{usertime}}</span>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        单元号<b>*</b>
+                    </div>
+                    <div class="aui-list-item-input">
+                      <select @chaneg="houseSelectVal" v-model="house">
+                          <option v-for="item in house_selects" >{{item.value}}</option>
+                      </select>
+
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题分类 <b>*</b>
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select @chaneg="selectVal" v-model="selected">
+                            <option v-for="item in selects" >{{item.value}}</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item item-textarea">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label" style="margin-top: -50px">
+                        问题描述 <b>*</b>
+                    </div>
+
+                    <div class="aui-list-item-input">
+                        <textarea id="txt" placeholder="请输入您的详细问题描述" v-model="description"></textarea>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-media-list" id="borde-top">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">上传问题图片 <b>*</b></div>
+                    <div class="aui-row aui-row-padded">
+                        <div class="aui-col-xs-4 add-photos" v-for="(item,index) in imgUrl" tapmode @click="fnOpenPicSlide(index)">
+                            <div class="aui-border aui-text-center">
+                                <img :src="item" class="autopic" />
+                            </div>
+                        </div>
+                        <div class="aui-col-xs-4 add-photos" v-if="isShow" tapmode @click="fnOpenPic()">
+                            <div class="aui-border aui-text-center">
+                                <i class="aui-iconfont aui-icon-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="aui-content-padded" tapmode @click="showDefault()">
+            <div class="aui-btn aui-btn-info aui-btn-block">完成</div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<!-- 用apicloud云服务需要加密key  SHA1-->
+<script type="text/javascript" src="../../script/SHA1.js"></script>
+<!-- 基于api.ajax而写的原生 JavaScript类库 -->
+<script type="text/javascript" src="../../script/APICloud-rest.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: "#app",
+        data: {
+            isShow: true,
+            id:"",
+            serialnumber:"",
+            username: "张三",
+            phone: "15323245",
+            usertime: "",
+            description: "",
+            selected: "请输入问题分类",
+            selects: [
+              {value: "请输入问题分类"},
+              {value: "水管问题"},
+              {value: "房屋问题"},
+              {value: "门窗问题"}
+            ],
+            house:"山水 45-51",
+            house_selects: [
+              {value: "山水 45-51"},
+              {value: "明月 2-35"},
+              {value: "康城 65-5"},
+              {value: "桃园 4-54"}
+            ],
+            houseSelects:"",
+            imgUrl: [],
+            evaluate_index:0,
+            evaluate_state:["待评价","已评价"],
+
+            handle_index:1,
+            handle_state:["提交信息","正在审核","师傅接单中","正在维修","维修完成"],
+
+            serial_state:['未派单','已派单','已接单'],//初始化 派单状态
+            serial_index:0,
+
+            admin_state:0, //管理中心状态 ['已发布','处理中','已完成']
+            master_state:0, //维修师傅状态 ['已发布','处理中','已完成']
+        },
+        methods: {
+            init: function() {},
+            selectVal: function(ele) {
+                this.selected = ele.terage.value;
+            },
+            houseSelectVal: function(ele) {
+                this.house = ele.terage.value;
+            },
+            showDefault: function() {
+                if (this.selected === "请输入问题分类") {
+                    api.toast({
+                        msg: '请输入问题分类',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+                if (!this.description) {
+                    api.toast({
+                        msg: '请填写问题描述',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                    return false;
+                }
+
+                // if (this.imgUrl.length < 3) {
+                //     api.toast({
+                //         msg: "请上传3张图片",
+                //         duration: 2000,
+                //         location: 'bottom'
+                //     });
+                //     return false;
+                // }
+                // 设置报修单号
+                setSerialnumber()
+                api.confirm( {
+                  title: '提示！',
+                  msg: '确认提交内容？',
+                  buttons: [ '确定', '取消' ]
+                }, function ( ret, err ) {
+                  var index = ret.buttonIndex;
+                  if ( index == 1 ) {
+                    console.log('点击了确定按钮')
+                        //提交数据
+                        postData();
+
+                        var toast = new auiToast();
+                        toast.success({
+                            title: "提交成功",
+                            duration: 1000,
+                            location: 'bottom'
+                        });
+                        api.openWin({
+                            name: 'owner_process',
+                            url: './owner_process.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                  }
+                } )
+
+            },
+            //打开相机
+            fnOpenPic: function() {
+                var that = this;
+                api.getPicture({
+                    sourceType: 'album',
+                    allowEdit: true,
+                    quality: 50,
+                    targetWidth: 1920,
+                    targetHeight: 1080,
+                    saveToPhotoAlbum: false
+                }, function(ret, err) {
+                    if (ret) {
+                        if (ret.data) {
+                            updatapic(ret.data)
+                        }
+                    } else {
+                        alert(JSON.stringify(err));
+                    }
+                });
+            },
+            //图片浏览
+            fnOpenPicSlide: function(index_) {
+                var that = this,
+                    activeIndex = index_;
+                var imageBrowser = api.require('imageBrowser');
+                imageBrowser.openImages({
+                    imageUrls: that.imgUrl,
+                    activeIndex: activeIndex
+                });
+            }
+
+        },
+        watch: {
+            imgUrl: function(value, oldvalue) {
+                if (value.length === 3) {
+                    this.isShow = false;
+                    api.toast({
+                        msg: '最多上传3张图片！',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            }
+        }
+
+    })
+
+    apiready = function() {
+        api.parseTapmode();
+        app.init();
+    };
+    // 图片上传到云端
+    function updatapic(urlpic) {
+        api.showProgress({
+            title: '努力加载中...',
+            text: '请稍等...',
+            modal: false
+        });
+        //mcm-js-sdk 发送
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Imgurl = client.Factory("imgurl");
+        Imgurl.save({
+            files: {
+                isFile: true, //标示对象是一个文件对象
+                isFileClass: false, //标示当前是对file表进行操作,file表作为Relation表的时候必须
+                path: urlpic, //文件地址
+            }
+        }, function(ret, err) {
+            api.hideProgress();
+            //console.log(JSON.stringify(ret))
+            app.imgUrl.push(ret.files.url)
+        })
+
+    };
+
+
+
+    //数据提交
+    function postData(postdata) {
+        var client = new Resource("A6078559557573", "F72208C8-80C7-34FE-96A6-8EA463594B54");
+        var Datalist = client.Factory("datalist");
+        Datalist.save({
+            serialnumber:app.serialnumber,
+            username: app.username,
+            phone: app.phone,
+            usertime: app.usertime,
+            house: app.house,
+            description: app.description,
+            selected: app.selected,
+            imgUrl: app.imgUrl,
+            evaluate_index: app.evaluate_index,
+            evaluate_state: app.evaluate_state,
+            handle_index: app.handle_index,
+            handle_state: app.handle_state,
+
+            serial_state:app.serial_state,//初始化 派单状态
+            serial_index:app.serial_index,
+            admin_state: app.admin_state,
+            master_state: app.admin_state,
+        }, function(ret, err) {
+            app.id=ret.id;
+            $api.setStorage('usernameId', ret.id);
+            console.log(JSON.stringify(ret))
+        })
+    }
+    //获取当前日期
+    (function getNowFormatDate() {
+        var newdate = new Date();
+        var year = newdate.getFullYear();
+        var month = newdate.getMonth() + 1;
+        var day = newdate.getDate();
+        var hours = newdate.getHours();
+        var minutes = newdate.getMinutes();
+        var seconds = newdate.getSeconds()
+        if (month >= 1 && month <= 9) {
+            month = "0" + month
+        };
+        if (day >= 0 && day <= 9) {
+            day = "0" + day
+        };
+        if (hours >= 0 && hours <= 9) {
+            hours = "0" + hours
+        };
+        if (minutes >= 0 && minutes <= 9) {
+            minutes = "0" + minutes
+        };
+        if (seconds >= 0 && seconds <= 9) {
+            seconds = "0" + seconds
+        };
+        var currentdate = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+        var serialNumber = year +  month +  day +  hours + minutes + seconds + setSerialnumber();
+        app.usertime =currentdate;
+        app.serialnumber = serialNumber;
+
+    })()
+    //随机生产报修单号
+     function setSerialnumber(){
+        var num = "";
+        for (var i =0; i <4; i++) {
+            num += Math.floor(Math.random()*10)
+        }
+       return num
+    }
+</script>
+
+</html>

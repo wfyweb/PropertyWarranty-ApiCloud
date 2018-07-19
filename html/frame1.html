@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item aui-list-item-middle" tepmode onclick="fnOpenOwner()">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">业主报修</div>
+            </li>
+            <li class="aui-list-item ">
+                <div class="aui-list-item-inner aui-list-item-arrow" tepmode onclick="fnOpenAdmin()">
+                    <div class="aui-list-item-title">物业管理</div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow" tepmode onclick="fnOpenMaster()">
+                    <div class="aui-list-item-title">维修师傅</div>
+                </div>
+            </li>
+        </ul>
+        </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var userId;
+    apiready = function() {
+       userId = $api.getStorage('key');
+
+
+    };
+
+    function fnOpenOwner() {
+      // api.openWin({
+      //       name: 'owner',
+      //       url: './owner/owner.html',
+      //       pageParam: {
+      //           name: 'test'
+      //       }
+      //   });
+        if(userId){
+          api.openWin({
+              name: 'owner',
+              url: './owner/owner.html',
+              pageParam: {
+                  name: 'test'
+              }
+          });
+        }else{
+
+           api.openWin({
+              name: 'owner_process',
+              url: './owner/owner_process.html',
+              pageParam: {
+                  name: 'test'
+              }
+          });
+        }
+    }
+    //关闭到frame1
+
+    function fnOpenAdmin() {
+        api.openWin({
+            name: 'admin',
+            url: './admin/admin.html',
+            pageParam: {
+                name: 'frame1'
+            }
+        });
+    }
+
+    function fnOpenMaster() {
+        api.openWin({
+            name: 'master',
+            url: './master/master.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-iconfont.2.0.css" />
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav ">
+        <a class="aui-pull-left" tapmode onclick="api.closeWin()"> <span class="aui-iconfont aui-icon-left"></span></a>
+        <div class="aui-title">维修中心-未处理</div>
+    </header>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        var H = $api.getStorage("Header-height");
+
+        api.openFrame({
+            name: 'master_details_body',
+            url: './master_details_body.html',
+            rect: {
+                x: 0,
+                y: H,
+                w: 'auto',
+                h: 'auto'
+            },
+            pageParam: {
+                name: 'test',
+                index:api.pageParam.index,
+                cou_index:api.pageParam.cou_index
+            },
+            bounces: true,
+            bgColor: 'rgba(0,0,0,0)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: true
+        });
+
+    };
+</script>
+
+</html>
